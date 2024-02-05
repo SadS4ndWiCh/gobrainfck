@@ -48,7 +48,7 @@ func (p *Parser) Parse() Program {
 			addr := jumps[len(jumps)-1]
 			jumps = jumps[:len(jumps)-1]
 
-			program.Tokens[addr].Value = i + 1
+			program.Tokens[addr].Value = i
 			p.currToken.Value = addr
 		}
 
