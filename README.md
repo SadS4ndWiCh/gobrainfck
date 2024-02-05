@@ -45,6 +45,19 @@ go run main.go examples/hello-world.bf
 // Output: Hello World!
 ```
 
+### Comment
+
+```
+file: examples/comment.bf
+
+[ That is a simple command and "+", "-", "<", ">", and so on is ignored ]
++++>+++<--
+```
+
+```
+go run main.go examples/comment.bf
+```
+
 ## 📖 References
 
 - [Brainf*ck](https://en.wikipedia.org/wiki/Brainfuck): Brainf*ck is an esoteric programming language created in 1993 by Urban Müller.
