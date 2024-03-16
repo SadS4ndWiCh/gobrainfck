@@ -1,22 +1,21 @@
-package parser
+package gobrainfck
 
 import (
 	"fmt"
-	"gobrainfck/lexer"
 	"os"
 )
 
 type Parser struct {
-	lexer     lexer.Lexer
-	currToken lexer.Token
-	peekToken lexer.Token
+	lexer     Lexer
+	currToken Token
+	peekToken Token
 }
 
 type Program struct {
-	Tokens []lexer.Token
+	Tokens []Token
 }
 
-func NewParser(lexer lexer.Lexer) Parser {
+func NewParser(lexer Lexer) Parser {
 	p := Parser{lexer: lexer}
 	p.nextToken()
 	p.nextToken()
@@ -24,7 +23,7 @@ func NewParser(lexer lexer.Lexer) Parser {
 	return p
 }
 
-func (p Parser) currTokenIs(kind lexer.TokenKind) bool { return p.currToken.Kind == kind }
+func (p Parser) currTokenIs(kind TokenKind) bool { return p.currToken.Kind == kind }
 
 func (p *Parser) nextToken() {
 	p.currToken = p.peekToken
@@ -35,11 +34,11 @@ func (p *Parser) Parse() Program {
 	program := Program{}
 	jumps := make([]uint, 0)
 
-	for i := uint(0); !p.currTokenIs(lexer.EOF); i++ {
+	for i := uint(0); !p.currTokenIs(EOF); i++ {
 		switch p.currToken.Kind {
-		case lexer.JUMP_IF:
+		case JUMP_IF:
 			jumps = append(jumps, i)
-		case lexer.JUMP_BACK_IF:
+		case JUMP_BACK_IF:
 			if len(jumps) == 0 {
 				fmt.Println("Unopened jump")
 				os.Exit(1)

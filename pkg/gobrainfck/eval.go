@@ -1,15 +1,13 @@
-package eval
+package gobrainfck
 
 import (
 	"fmt"
-	"gobrainfck/lexer"
-	"gobrainfck/parser"
 	"os"
 )
 
 const MAX_MEMORY = 60
 
-func Eval(p parser.Parser) {
+func Eval(p Parser) {
 	memory := make([]int, MAX_MEMORY)
 	ptr := 0
 
@@ -19,35 +17,35 @@ func Eval(p parser.Parser) {
 		tk := program.Tokens[i]
 
 		switch tk.Kind {
-		case lexer.ADD:
+		case ADD:
 			memory[ptr] += int(tk.Value)
-		case lexer.SUB:
+		case SUB:
 			memory[ptr] -= int(tk.Value)
-		case lexer.FORWARD:
+		case FORWARD:
 			if ptr >= MAX_MEMORY {
 				fmt.Println("Stack overflow")
 				os.Exit(1)
 			}
 			ptr += int(tk.Value)
-		case lexer.BACKWARD:
+		case BACKWARD:
 			if ptr < 0 {
 				fmt.Println("Stack underflow")
 				os.Exit(1)
 			}
 			ptr -= int(tk.Value)
-		case lexer.JUMP_IF:
+		case JUMP_IF:
 			if memory[ptr] == 0 {
 				i = int(tk.Value)
 			}
-		case lexer.JUMP_BACK_IF:
+		case JUMP_BACK_IF:
 			if memory[ptr] != 0 {
 				i = int(tk.Value)
 			}
-		case lexer.PRINT:
+		case PRINT:
 			for c := tk.Value; c > 0; c-- {
 				fmt.Printf("%c", memory[ptr])
 			}
-		case lexer.INPUT:
+		case INPUT:
 			fmt.Scanf("%c", &memory[ptr])
 		}
 	}

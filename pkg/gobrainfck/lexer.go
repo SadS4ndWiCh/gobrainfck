@@ -1,4 +1,4 @@
-package lexer
+package gobrainfck
 
 import (
 	"strings"
